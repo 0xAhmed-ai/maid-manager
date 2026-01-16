@@ -18,12 +18,23 @@ A multilingual maid management mobile app with iOS-style design, role-based acce
 - **Notifications**: Real-time task assignment and completion notifications
 - **Dark Mode**: System-based theme switching
 - **iOS-style Design**: System Blue (#007AFF), Green (#34C759), Orange (#FF9500)
+- **New Architecture**: Built with React Native's New Architecture enabled
+
+## Tech Stack
+
+- **Expo SDK**: 54 (Latest)
+- **React Native**: 0.81
+- **React**: 19.1
+- **Backend**: Supabase (Auth + PostgreSQL + Row Level Security)
+- **Navigation**: React Navigation 7
+- **Internationalization**: i18next with RTL support
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - Expo CLI (`npm install -g expo-cli`)
 - Supabase account
+- Xcode 16.1+ (for iOS development)
 
 ## Setup
 
@@ -99,6 +110,13 @@ expo-maid-manager/
 └── package.json
 ```
 
+## SDK 54 Features Used
+
+- **New Architecture**: Enabled by default for better performance
+- **Edge-to-edge**: Android 16 edge-to-edge display support
+- **React 19.1**: Latest React with improved concurrent features
+- **React Native 0.81**: Latest stable React Native
+
 ## Demo Accounts
 
 After setting up, create accounts through the app:
@@ -106,18 +124,15 @@ After setting up, create accounts through the app:
 1. **Owner Account**: Register with role "Owner" to manage tasks and maids
 2. **Maid Account**: Register with role "Maid" to view and complete assigned tasks
 
-## Technologies
-
-- **React Native**: Mobile framework
-- **Expo**: Development platform
-- **Supabase**: Backend (Auth + PostgreSQL + Row Level Security)
-- **React Navigation**: Navigation library
-- **i18next**: Internationalization
-- **TypeScript**: Type safety
-
 ## Building for Production
 
 ```bash
+# Install EAS CLI
+npm install -g eas-cli
+
+# Configure EAS
+eas build:configure
+
 # Build for iOS
 eas build --platform ios
 

@@ -13,12 +13,14 @@ Preferred communication style: Simple, everyday language.
 ## Expo Mobile App (expo-maid-manager/)
 
 ### Architecture
-- **Framework**: React Native with Expo SDK 51
+- **Framework**: React Native 0.81 with Expo SDK 54 (New Architecture enabled)
+- **React**: 19.1
 - **Backend**: Supabase (Auth + PostgreSQL + Row Level Security)
-- **Navigation**: React Navigation (Bottom Tabs + Native Stack)
+- **Navigation**: React Navigation 7 (Bottom Tabs + Native Stack)
 - **State Management**: React Context (AuthContext, ThemeContext)
 - **Internationalization**: react-i18next with 8 languages, RTL support for Arabic/Urdu
 - **Storage**: expo-secure-store for token persistence
+- **Android**: Edge-to-edge display enabled
 
 ### Languages Supported
 1. English (en)

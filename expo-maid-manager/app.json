@@ -6,28 +6,38 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#007AFF"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.maidmanager.app"
+      "bundleIdentifier": "com.maidmanager.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow MaidManager to access your camera for task photo evidence.",
+        "NSPhotoLibraryUsageDescription": "Allow MaidManager to access your photos for task attachments."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#007AFF"
       },
-      "package": "com.maidmanager.app"
+      "package": "com.maidmanager.app",
+      "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-localization",
       "expo-secure-store"
-    ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }
