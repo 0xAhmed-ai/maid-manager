@@ -1,6 +1,6 @@
 # MaidManager - React Native Expo App
 
-A multilingual maid management mobile app with iOS-style design, role-based access control, and Supabase backend.
+A multilingual maid management mobile app with iOS-style design, role-based access control, and Supabase backend. Built with Expo SDK 54 best practices.
 
 ## Features
 
@@ -76,46 +76,68 @@ npx expo start --android
 npx expo start --web
 ```
 
-## Project Structure
+## Project Structure (SDK 54 Best Practices)
 
 ```
 expo-maid-manager/
-├── App.tsx                    # App entry point
+├── App.tsx                    # App entry with ErrorBoundary
+├── app.json                   # Expo config with newArchEnabled
+├── babel.config.js            # Clean preset config
 ├── src/
 │   ├── components/            # Reusable UI components
+│   │   ├── index.ts           # Barrel export
 │   │   ├── Button.tsx
 │   │   ├── Card.tsx
 │   │   ├── Input.tsx
-│   │   └── TaskCard.tsx
+│   │   ├── TaskCard.tsx
+│   │   ├── Loading.tsx
+│   │   ├── EmptyState.tsx
+│   │   └── ErrorBoundary.tsx
+│   ├── constants/             # App-wide constants
+│   │   └── index.ts
 │   ├── contexts/              # React Context providers
-│   │   ├── AuthContext.tsx    # Authentication state
-│   │   └── ThemeContext.tsx   # Theme/dark mode state
+│   │   ├── index.ts           # Barrel export
+│   │   ├── AuthContext.tsx
+│   │   └── ThemeContext.tsx
+│   ├── hooks/                 # Custom React hooks
+│   │   ├── index.ts           # Barrel export
+│   │   ├── useTasks.ts
+│   │   └── useNotifications.ts
 │   ├── lib/
-│   │   ├── database.types.ts  # Supabase type definitions
-│   │   ├── i18n.ts           # Internationalization setup
-│   │   ├── supabase.ts       # Supabase client
-│   │   └── theme.ts          # Design tokens
+│   │   ├── index.ts           # Barrel export
+│   │   ├── database.types.ts
+│   │   ├── i18n.ts
+│   │   ├── supabase.ts
+│   │   └── theme.ts
 │   ├── navigation/
-│   │   └── AppNavigator.tsx   # React Navigation setup
-│   └── screens/               # App screens
-│       ├── LoginScreen.tsx
-│       ├── DashboardScreen.tsx
-│       ├── TasksScreen.tsx
-│       ├── TaskDetailScreen.tsx
-│       ├── CreateTaskScreen.tsx
-│       ├── MaidsScreen.tsx
-│       ├── NotificationsScreen.tsx
-│       └── SettingsScreen.tsx
+│   │   └── AppNavigator.tsx
+│   ├── screens/
+│   │   ├── LoginScreen.tsx
+│   │   ├── DashboardScreen.tsx
+│   │   ├── TasksScreen.tsx
+│   │   ├── TaskDetailScreen.tsx
+│   │   ├── CreateTaskScreen.tsx
+│   │   ├── MaidsScreen.tsx
+│   │   ├── NotificationsScreen.tsx
+│   │   └── SettingsScreen.tsx
+│   └── utils/                 # Utility functions
+│       ├── index.ts
+│       └── date.ts
 ├── supabase-schema.sql        # Database schema
 └── package.json
 ```
 
-## SDK 54 Features Used
+## SDK 54 Best Practices Applied
 
-- **New Architecture**: Enabled by default for better performance
-- **Edge-to-edge**: Android 16 edge-to-edge display support
-- **React 19.1**: Latest React with improved concurrent features
-- **React Native 0.81**: Latest stable React Native
+1. **New Architecture enabled** - Better performance and future compatibility
+2. **Barrel exports** - Clean imports with index.ts files
+3. **Custom hooks** - Extracted data fetching logic (useTasks, useNotifications)
+4. **Error boundaries** - Graceful crash handling
+5. **Constants centralized** - App-wide values in one place
+6. **Utility functions** - Reusable date formatting helpers
+7. **Clean babel config** - Only uses babel-preset-expo
+8. **Edge-to-edge** - Android 16 display support
+9. **TypeScript strict mode** - Better type safety
 
 ## Demo Accounts
 
@@ -138,7 +160,17 @@ eas build --platform ios
 
 # Build for Android
 eas build --platform android
+
+# Verify project health
+npx expo-doctor
 ```
+
+## Migration Notes
+
+This project uses the latest SDK 54 patterns:
+- No react-native-reanimated/plugin in babel.config.js (handled by babel-preset-expo)
+- expo-file-system uses new API (legacy available at expo-file-system/legacy)
+- New Architecture is default (set newArchEnabled: false to disable)
 
 ## License
 
