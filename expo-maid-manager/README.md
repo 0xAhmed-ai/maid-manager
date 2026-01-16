@@ -1,12 +1,13 @@
 # MaidManager - React Native Expo App
 
-A multilingual maid management mobile app with iOS-style design, role-based access control, and Supabase backend. Built with Expo SDK 54 best practices.
+A multilingual maid management mobile app with iOS-style design, role-based access control, and Supabase backend. Built with **Expo Router v6** and **SDK 54** best practices.
 
 ## Features
 
-- **Role-based Access Control**: Separate dashboards for Owners and Maids
-- **Task Management**: Create, assign, update, and complete tasks
-- **Multi-language Support**: 8 languages including RTL support for Arabic and Urdu
+- **Expo Router v6** - File-based routing with typed routes
+- **Role-based Access Control** - Separate dashboards for Owners and Maids
+- **Task Management** - Create, assign, update, and complete tasks
+- **Multi-language Support** - 8 languages including RTL support
   - English (en)
   - Arabic (ar) - RTL
   - Urdu (ur) - RTL
@@ -15,18 +16,26 @@ A multilingual maid management mobile app with iOS-style design, role-based acce
   - Filipino (fil)
   - Chinese Traditional (tw)
   - Amharic (am)
-- **Notifications**: Real-time task assignment and completion notifications
-- **Dark Mode**: System-based theme switching
-- **iOS-style Design**: System Blue (#007AFF), Green (#34C759), Orange (#FF9500)
-- **New Architecture**: Built with React Native's New Architecture enabled
+- **Notifications** - Real-time task assignment and completion notifications
+- **Dark Mode** - System-based theme switching
+- **iOS-style Design** - System Blue (#007AFF), Green (#34C759), Orange (#FF9500)
+- **New Architecture** - Built with React Native's New Architecture enabled
+
+## Expo Router v6 Features
+
+- **File-based routing** - Routes auto-generated from `app/` directory
+- **Native modals** - Modal presentation for task creation
+- **Typed routes** - TypeScript support for navigation
+- **Link Previews** - iOS context menus (upcoming)
+- **Liquid Glass Tabs** - Native tabs for iOS/Android (upcoming)
 
 ## Tech Stack
 
-- **Expo SDK**: 54 (Latest)
+- **Expo SDK**: 54
+- **Expo Router**: 6.0
 - **React Native**: 0.81
 - **React**: 19.1
 - **Backend**: Supabase (Auth + PostgreSQL + Row Level Security)
-- **Navigation**: React Navigation 7
 - **Internationalization**: i18next with RTL support
 
 ## Prerequisites
@@ -76,75 +85,81 @@ npx expo start --android
 npx expo start --web
 ```
 
-## Project Structure (SDK 54 Best Practices)
+## Project Structure (Expo Router v6)
 
 ```
 expo-maid-manager/
-├── App.tsx                    # App entry with ErrorBoundary
-├── app.json                   # Expo config with newArchEnabled
-├── babel.config.js            # Clean preset config
+├── app/                       # File-based routes (Expo Router v6)
+│   ├── _layout.tsx            # Root layout with providers
+│   ├── index.tsx              # Auth redirect
+│   ├── +not-found.tsx         # 404 handler
+│   ├── (auth)/                # Auth group (no URL segment)
+│   │   ├── _layout.tsx
+│   │   ├── login.tsx          # /login
+│   │   └── register.tsx       # /register
+│   ├── (tabs)/                # Tab group (no URL segment)
+│   │   ├── _layout.tsx        # Tab navigator
+│   │   ├── index.tsx          # / (Dashboard)
+│   │   ├── tasks.tsx          # /tasks
+│   │   ├── maids.tsx          # /maids (Owner only)
+│   │   ├── notifications.tsx  # /notifications
+│   │   └── settings.tsx       # /settings
+│   └── task/
+│       ├── [id].tsx           # /task/:id (Dynamic route)
+│       └── create.tsx         # /task/create (Modal)
 ├── src/
 │   ├── components/            # Reusable UI components
-│   │   ├── index.ts           # Barrel export
-│   │   ├── Button.tsx
-│   │   ├── Card.tsx
-│   │   ├── Input.tsx
-│   │   ├── TaskCard.tsx
-│   │   ├── Loading.tsx
-│   │   ├── EmptyState.tsx
-│   │   └── ErrorBoundary.tsx
 │   ├── constants/             # App-wide constants
-│   │   └── index.ts
 │   ├── contexts/              # React Context providers
-│   │   ├── index.ts           # Barrel export
-│   │   ├── AuthContext.tsx
-│   │   └── ThemeContext.tsx
 │   ├── hooks/                 # Custom React hooks
-│   │   ├── index.ts           # Barrel export
-│   │   ├── useTasks.ts
-│   │   └── useNotifications.ts
-│   ├── lib/
-│   │   ├── index.ts           # Barrel export
-│   │   ├── database.types.ts
-│   │   ├── i18n.ts
-│   │   ├── supabase.ts
-│   │   └── theme.ts
-│   ├── navigation/
-│   │   └── AppNavigator.tsx
-│   ├── screens/
-│   │   ├── LoginScreen.tsx
-│   │   ├── DashboardScreen.tsx
-│   │   ├── TasksScreen.tsx
-│   │   ├── TaskDetailScreen.tsx
-│   │   ├── CreateTaskScreen.tsx
-│   │   ├── MaidsScreen.tsx
-│   │   ├── NotificationsScreen.tsx
-│   │   └── SettingsScreen.tsx
+│   ├── lib/                   # Supabase, theme, i18n, types
 │   └── utils/                 # Utility functions
-│       ├── index.ts
-│       └── date.ts
-├── supabase-schema.sql        # Database schema
-└── package.json
+├── assets/                    # Images and icons
+├── app.json                   # Expo config
+├── package.json
+└── supabase-schema.sql        # Database schema
 ```
 
-## SDK 54 Best Practices Applied
+## Expo Router v6 Navigation
 
-1. **New Architecture enabled** - Better performance and future compatibility
-2. **Barrel exports** - Clean imports with index.ts files
-3. **Custom hooks** - Extracted data fetching logic (useTasks, useNotifications)
-4. **Error boundaries** - Graceful crash handling
-5. **Constants centralized** - App-wide values in one place
-6. **Utility functions** - Reusable date formatting helpers
-7. **Clean babel config** - Only uses babel-preset-expo
-8. **Edge-to-edge** - Android 16 display support
-9. **TypeScript strict mode** - Better type safety
+### File-based Routing
+
+| File | Route |
+|------|-------|
+| `app/index.tsx` | `/` |
+| `app/(tabs)/tasks.tsx` | `/tasks` |
+| `app/task/[id].tsx` | `/task/:id` |
+| `app/task/create.tsx` | `/task/create` |
+
+### Navigation Examples
+
+```tsx
+import { Link, router } from 'expo-router';
+
+// Declarative navigation
+<Link href="/tasks">View Tasks</Link>
+<Link href="/task/123">View Task</Link>
+
+// Imperative navigation
+router.push('/tasks');
+router.push('/task/create');
+router.back();
+router.replace('/(tabs)');
+```
+
+### Route Groups
+
+- `(auth)` - Authentication screens (login, register)
+- `(tabs)` - Main app with tab navigation
+
+Route groups use parentheses and don't affect the URL.
 
 ## Demo Accounts
 
 After setting up, create accounts through the app:
 
-1. **Owner Account**: Register with role "Owner" to manage tasks and maids
-2. **Maid Account**: Register with role "Maid" to view and complete assigned tasks
+1. **Owner Account** - Register with role "Owner" to manage tasks and maids
+2. **Maid Account** - Register with role "Maid" to view and complete assigned tasks
 
 ## Building for Production
 
@@ -165,12 +180,15 @@ eas build --platform android
 npx expo-doctor
 ```
 
-## Migration Notes
+## SDK 54 + Router v6 Best Practices
 
-This project uses the latest SDK 54 patterns:
-- No react-native-reanimated/plugin in babel.config.js (handled by babel-preset-expo)
-- expo-file-system uses new API (legacy available at expo-file-system/legacy)
-- New Architecture is default (set newArchEnabled: false to disable)
+1. **File-based routing** - All routes in `app/` directory
+2. **Route groups** - `(auth)`, `(tabs)` for organization
+3. **Dynamic routes** - `[id].tsx` for parameters
+4. **Modal presentation** - `presentation: 'modal'` in Stack.Screen
+5. **Typed routes** - Enable in `app.json` experiments
+6. **New Architecture** - Enabled by default
+7. **Edge-to-edge** - Android 16 display support
 
 ## License
 

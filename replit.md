@@ -15,8 +15,8 @@ Preferred communication style: Simple, everyday language.
 ### Architecture
 - **Framework**: React Native 0.81 with Expo SDK 54 (New Architecture enabled)
 - **React**: 19.1
+- **Navigation**: Expo Router v6 (File-based routing with typed routes)
 - **Backend**: Supabase (Auth + PostgreSQL + Row Level Security)
-- **Navigation**: React Navigation 7 (Bottom Tabs + Native Stack)
 - **State Management**: React Context (AuthContext, ThemeContext)
 - **Internationalization**: react-i18next with 8 languages, RTL support for Arabic/Urdu
 - **Storage**: expo-secure-store for token persistence
@@ -37,16 +37,33 @@ Preferred communication style: Simple, everyday language.
 - System Green: #34C759 (light) / #30D158 (dark)
 - System Orange: #FF9500 (light) / #FF9F0A (dark)
 
-### Project Structure
+### Project Structure (Expo Router v6)
 ```
 expo-maid-manager/
-├── App.tsx                    # App entry point
+├── app/                       # File-based routes (Expo Router v6)
+│   ├── _layout.tsx            # Root layout with providers
+│   ├── index.tsx              # Auth redirect
+│   ├── +not-found.tsx         # 404 handler
+│   ├── (auth)/                # Auth group
+│   │   ├── login.tsx
+│   │   └── register.tsx
+│   ├── (tabs)/                # Tab navigator group
+│   │   ├── _layout.tsx
+│   │   ├── index.tsx          # Dashboard
+│   │   ├── tasks.tsx
+│   │   ├── maids.tsx
+│   │   ├── notifications.tsx
+│   │   └── settings.tsx
+│   └── task/
+│       ├── [id].tsx           # Dynamic route
+│       └── create.tsx         # Modal
 ├── src/
 │   ├── components/            # Button, Card, Input, TaskCard
+│   ├── constants/             # App-wide constants
 │   ├── contexts/              # AuthContext, ThemeContext
-│   ├── lib/                   # supabase, i18n, theme, database.types
-│   ├── navigation/            # AppNavigator with role-based routing
-│   └── screens/               # All app screens
+│   ├── hooks/                 # useTasks, useNotifications
+│   ├── lib/                   # supabase, i18n, theme, types
+│   └── utils/                 # Date formatting utilities
 ├── supabase-schema.sql        # Database setup with RLS policies
 └── README.md                  # Setup instructions
 ```
