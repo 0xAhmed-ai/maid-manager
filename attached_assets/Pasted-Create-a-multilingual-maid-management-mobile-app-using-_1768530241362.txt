@@ -1,0 +1,55 @@
+Create a multilingual maid management mobile app using Next.js 15 with role-based access:
+Design System:
+* System fonts (-apple-system, SF Pro Display, Roboto, ui-sans-serif): 20px task titles, 16px task descriptions, 14px metadata
+* iOS-style colors: System Blue (#007AFF) primary actions, System Green (#34C759) completed tasks
+* System Orange (#FF9500) pending tasks, System Gray (#8E8E93) inactive elements
+* Clean card design with 12px radius, subtle shadows for task cards
+* Set background color on <html> tag in layout.tsx using className="bg-gray-50" for modern interface
+User Roles & Features:
+Owner Dashboard:
+* Create and assign tasks to specific maids
+* Set task priorities, deadlines, and descriptions
+* View task completion status in real-time
+* Manage maid profiles and access
+* View task history and performance reports
+* Push notifications when tasks are completed
+Maid Dashboard:
+* View assigned tasks in list and calendar views
+* Mark tasks as completed with photo evidence option
+* Add notes or comments to tasks
+* Receive notifications for new task assignments
+* Simple, easy-to-navigate interface
+* Offline task viewing capability
+Multi-Language Support:
+* Built-in i18n with next-intl or react-i18next
+* Initial languages: English, Arabic (RTL support), Hindi, Bahasa Indonesia, Filipino, Urdu, Twi/English (Ghana), Amharic
+* Language selector in user profile
+* Right-to-left (RTL) layout support for Arabic and Urdu
+* Localized date/time formats for each region
+Authentication & Security:
+* Separate login flows for owners and maids
+* Role-based access control (RBAC)
+* Secure session management with Next.js 15
+* Optional biometric authentication (Touch/Face ID)
+* Password reset via email/SMS
+* Data encryption for sensitive information
+Mobile-First Features:
+* Touch-optimized UI with large tap targets
+* Camera integration for task photo evidence
+* Push notifications for task updates
+* Offline mode with data synchronization
+* Progressive Web App (PWA) support
+* Works on iOS and Android browsers
+Technical Implementation:
+* Next.js 15 with App Router and Server Components
+* React state management for real-time updates
+* Responsive design: mobile-first, tablet and desktop compatible
+* WCAG AA 2.1 accessibility compliance
+* Optimized for various network conditions (2G-5G)
+* In-memory state management (useState/useReducer) - no localStorage/sessionStorage
+Core Pages:
+1. Login/Registration (role selection)
+2. Owner: Task creation, maid management, dashboard
+3. Maid: Task list, task details, completion interface
+4. Profile & settings (language selection)
+5. Notifications center```
