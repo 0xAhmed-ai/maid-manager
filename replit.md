@@ -2,82 +2,65 @@
 
 ## Overview
 
-MaidManager is a multilingual maid management mobile-first web application with role-based access control. The app enables household owners to create and assign tasks to maids, while maids can view and complete their assigned tasks. Key features include real-time task tracking, multi-language support with RTL layout for Arabic/Urdu, push notifications, and an iOS-style design system.
+MaidManager is a multilingual maid management mobile application built with React Native/Expo and Supabase backend. The app enables household owners to create and assign tasks to maids, while maids can view and complete their assigned tasks. Key features include real-time task tracking, multi-language support with RTL layout for Arabic/Urdu, push notifications, and an iOS-style design system.
+
+**Note:** This project contains an Expo mobile app for export and external deployment. The Replit environment cannot run React Native/Expo due to package compatibility constraints.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
 
-## System Architecture
+## Expo Mobile App (expo-maid-manager/)
 
-### Frontend Architecture
-- **Framework**: React with TypeScript, using Vite as the build tool
-- **Routing**: Wouter for client-side routing
-- **State Management**: React Context API (AppContext) for global state including user, tasks, maids, notifications, language, and dark mode
-- **Data Fetching**: TanStack React Query for server state management with custom query functions
-- **UI Components**: shadcn/ui component library built on Radix UI primitives
-- **Styling**: Tailwind CSS with iOS-style design tokens (System Blue, Green, Orange colors)
-- **Internationalization**: Custom i18n implementation supporting 8 languages with RTL support for Arabic and Urdu
+### Architecture
+- **Framework**: React Native with Expo SDK 51
+- **Backend**: Supabase (Auth + PostgreSQL + Row Level Security)
+- **Navigation**: React Navigation (Bottom Tabs + Native Stack)
+- **State Management**: React Context (AuthContext, ThemeContext)
+- **Internationalization**: react-i18next with 8 languages, RTL support for Arabic/Urdu
+- **Storage**: expo-secure-store for token persistence
 
-### Backend Architecture
-- **Framework**: Express.js with TypeScript
-- **HTTP Server**: Node.js http module with Express middleware
-- **Session Management**: express-session with MemoryStore for development
-- **API Design**: RESTful endpoints under `/api/` prefix for auth, tasks, users, and notifications
-- **Build Process**: Custom build script using esbuild for server bundling and Vite for client
+### Languages Supported
+1. English (en)
+2. Arabic (ar) - RTL
+3. Urdu (ur) - RTL
+4. Hindi (hi)
+5. Indonesian (id)
+6. Filipino (fil)
+7. Chinese Traditional (tw)
+8. Amharic (am)
 
-### Data Storage
-- **ORM**: Drizzle ORM with PostgreSQL dialect
-- **Schema Location**: `shared/schema.ts` contains table definitions for users, tasks, and notifications
-- **Development Storage**: In-memory storage implementation (`MemStorage` class) with seeded demo data
-- **Database Migrations**: Drizzle Kit for schema migrations stored in `/migrations`
-
-### Authentication & Authorization
-- **Session-based Auth**: Express sessions with configurable cookie settings
-- **Role-based Access Control**: Two roles - "owner" and "maid" with different dashboard views and permissions
-- **Password Storage**: Currently plain text (should be hashed in production)
-- **Protected Routes**: Client-side route protection with redirect to login
+### iOS-style Design System
+- System Blue: #007AFF (light) / #0A84FF (dark)
+- System Green: #34C759 (light) / #30D158 (dark)
+- System Orange: #FF9500 (light) / #FF9F0A (dark)
 
 ### Project Structure
 ```
-├── client/          # React frontend application
-│   └── src/
-│       ├── components/   # Reusable UI components
-│       ├── contexts/     # React Context providers
-│       ├── hooks/        # Custom React hooks
-│       ├── lib/          # Utilities, i18n, query client
-│       └── pages/        # Route page components
-├── server/          # Express backend
-│   ├── index.ts     # Server entry point
-│   ├── routes.ts    # API route definitions
-│   ├── storage.ts   # Data storage interface
-│   └── vite.ts      # Vite dev server integration
-├── shared/          # Shared code between client/server
-│   └── schema.ts    # Drizzle schema and Zod validators
-└── migrations/      # Database migrations
+expo-maid-manager/
+├── App.tsx                    # App entry point
+├── src/
+│   ├── components/            # Button, Card, Input, TaskCard
+│   ├── contexts/              # AuthContext, ThemeContext
+│   ├── lib/                   # supabase, i18n, theme, database.types
+│   ├── navigation/            # AppNavigator with role-based routing
+│   └── screens/               # All app screens
+├── supabase-schema.sql        # Database setup with RLS policies
+└── README.md                  # Setup instructions
 ```
 
-## External Dependencies
+### Export Instructions
+1. Download the `expo-maid-manager` folder
+2. Run `npm install` to install dependencies
+3. Create a Supabase project and run `supabase-schema.sql`
+4. Create `.env` with Supabase credentials
+5. Run `npx expo start` to launch the app
 
-### Database
-- **PostgreSQL**: Primary database (configured via `DATABASE_URL` environment variable)
-- **Drizzle ORM**: Database abstraction and query building
+## Original Web App (Legacy)
 
-### UI Framework
-- **Radix UI**: Accessible component primitives (dialog, dropdown, tabs, etc.)
-- **shadcn/ui**: Pre-built component library using Radix and Tailwind
-- **Lucide React**: Icon library
+The `client/`, `server/`, and `shared/` directories contain the original web application built with:
+- React + Vite frontend
+- Express.js backend
+- Drizzle ORM with PostgreSQL
 
-### Development Tools
-- **Vite**: Frontend build tool with HMR support
-- **esbuild**: Fast server bundling for production
-- **TypeScript**: Type safety across the stack
-
-### Session Storage
-- **memorystore**: In-memory session storage for development
-- **connect-pg-simple**: PostgreSQL session store (available for production)
-
-### Utilities
-- **date-fns**: Date formatting and manipulation
-- **Zod**: Schema validation for API requests
-- **drizzle-zod**: Generate Zod schemas from Drizzle tables
+This web version remains available but is superseded by the Expo mobile app for the core use case.
