@@ -58,7 +58,7 @@ export class MemStorage implements IStorage {
 
     this.users.set(maid1Id, {
       id: maid1Id,
-      username: "maria",
+      username: "maid1",
       password: "1234",
       name: "Maria Santos",
       role: "maid",
@@ -68,7 +68,7 @@ export class MemStorage implements IStorage {
 
     this.users.set(maid2Id, {
       id: maid2Id,
-      username: "fatima",
+      username: "maid2",
       password: "1234",
       name: "Fatima Ahmed",
       role: "maid",
